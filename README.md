@@ -3,7 +3,9 @@
 Implementação em HTML5 do jogo Yoté. 
 
 Yoté é um jogo de tabuleiro de origem africana (popular no Senegal, Mali, Guiné e Gâmbia). O jogo tem semelhanças com o jogo de damas, mas possuem regras específicas.
-Yoté
+
+![imagem 2d do jogo Yote](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Yoté.svg/400px-Yoté.svg.png)
+
 
 Regras
 
