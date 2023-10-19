@@ -75,7 +75,7 @@ function nextPlayer(){
     actual_player = anotherPlayer(actual_player);
 }
 
-function printboard(){
+function logboard(){
     for(let i = 0; i < 5; i++)
         console.log(board[i]);
 }

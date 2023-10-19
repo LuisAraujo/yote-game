@@ -1,13 +1,32 @@
 <document>
 <head>
-    <script src="app.js"></script>
+    <title>Yote - The African Game</title>
     <style>
+        body{
+            background-image: url("background.jpg");
+            background-size: cover;
+        }
         #main-canvas{
-            border: 1px solid #000;
+            border: 5px solid #000;
+            margin-left: calc(50% - 300px);
+           
+        }
+        #footer{
+            position: fixed;
+            bottom: 5px;
+            background-color: aliceblue;
+            padding: 2px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
+<div>
+    <img src="">
+</div>
 <canvas id="main-canvas" height="500px" width="600px"></canvas>
+<script src="app.js"></script>
+<script src="canvas.js"></script>
+<div id="footer">Background: Image by Freepik</div>
 </body>
 </document>
