@@ -57,6 +57,8 @@ canvas.addEventListener("mousemove", (e) => {
 canvas.addEventListener("mousedown", (e) => {
     opacity = 1;
     selectedposition = convertMousePosition(e);
+    console.log(selectedposition)
+    setState('p'+(actual_player+1)+'-selectpos');
 });
 
 function printAll(){

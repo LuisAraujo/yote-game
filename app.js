@@ -1,18 +1,58 @@
 var board;
 var pieces_players;
 var actual_player;
-var state;
+//wait-p1, p1-chosepiece, selectpos
+var state = '';
 
+
+function setState(s){
+    console.log(s, state);
+    if(s == 'p1-chosepiece'){
+        if(state == 'wait-p1'){
+            state = s;
+            alert("Selecione a posicao");
+        }else{
+            alert('Jogada ilegal')
+        } 
+    }else if(s == 'p2-chosepiece'){
+        if(state == 'wait-p2'){
+            state = s;
+            alert("Selecione a posicao");
+        }else{
+            alert('Jogada ilegal')
+        } 
+    }else if(s == 'p1-selectpos'){
+        if(state == 'p1-chosepiece'){
+            state = s;
+            if(newPiece(selectedposition[1], selectedposition[0], 0)){
+                state = 'wait-p2';
+                actual_player = 1;
+            }
+        }else{
+            alert('Jogada ilegal')
+        }
+    }else if(s == 'p2-selectpos'){
+        if(state == 'p2-chosepiece'){
+            state = s;
+            if(newPiece(selectedposition[1], selectedposition[0], 1)){
+                state = 'wait-p1';
+                actual_player = 0;
+            }
+        }else{
+            alert('Jogada ilegal')
+        }
+    }
+}
 //start new game 
 function startNewGame(){
     //12 pieces of each player
     pieces_players = [12,12];
     actual_player = 0;
-    state = "player-0";
+    state = "wait-p1";
     //create array of board
-    board= new Array(5);
+    board= new Array(6);
     for(let i = 0; i < 6; i++)
-        board[i] = [null,null,null,null,null,null, null];
+        board[i] = [null,null,null,null,null];
  
 }
 //this place is empty?
@@ -28,6 +68,7 @@ function newPiece(x, y, player){
     if((pieces_players[player]) && (emptyPlace(x,y))){
         board[x][y] = player;
         pieces_players[player]--;
+        return true;
     }else{
         return false;
     }
