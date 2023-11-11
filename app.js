@@ -4,55 +4,94 @@ var actual_player;
 //wait-p1, p1-chosepiece, selectpos
 var state = '';
 
+function setActualPlayer(player){
+    actual_player = player;
+    span_actualplayer.innerText = actual_player;
+    cont_actualplayer.className = 'container-p'+(player+1);
+}
 
 function setState(s){
-    console.log(s, state);
-    if(s == 'p1-chosepiece'){
+   
+    if(state == 'p1-select-finalpos'){
+        if(emptyPlace(selectedposition[1], selectedposition[0])){
+           
+           if( movePiece(oldselectedposition[1], oldselectedposition[0],
+                selectedposition[1], selectedposition[0], 0) ){
+                    state = 'wait-p2';
+                    nextPlayer()
+                }else{
+                    console.log('jogada ilegal, não é possivel mover para essa posição');
+                }
+        }
+    }else if(state == 'p2-select-finalpos'){
+        if(emptyPlace(selectedposition[1], selectedposition[0])){
+            if(movePiece(oldselectedposition[1], oldselectedposition[0],
+                selectedposition[1], selectedposition[0], 1)){
+                    state = 'wait-p1';
+                    nextPlayer()
+                }else{
+                    console.log('jogada ilegal, não é possivel mover para essa posição');
+                }
+                
+        }
+    }else if(s == 'p1-chosepiece'){
         if(state == 'wait-p1'){
             state = s;
             alert("Selecione a posicao");
         }else{
-            alert('Jogada ilegal')
+            alert('Jogada ilegal, não é sua vez!')
         } 
     }else if(s == 'p2-chosepiece'){
         if(state == 'wait-p2'){
             state = s;
             alert("Selecione a posicao");
         }else{
-            alert('Jogada ilegal')
+            alert('Jogada ilegal, não é sua vez!')
         } 
     }else if(s == 'p1-selectpos'){
         if(state == 'p1-chosepiece'){
             state = s;
             if(newPiece(selectedposition[1], selectedposition[0], 0)){
                 state = 'wait-p2';
-                actual_player = 1;
+                nextPlayer()
             }
+        }else if(board[selectedposition[1]][selectedposition[0]] == 0){
+            state = 'p1-select-finalpos';
+            alert('Selecione a posição de destino');
+            oldselectedposition = selectedposition;
         }else{
-            alert('Jogada ilegal')
+            alert('Jogada ilegal, não é possivel selecionar um local')
         }
+    
     }else if(s == 'p2-selectpos'){
         if(state == 'p2-chosepiece'){
             state = s;
             if(newPiece(selectedposition[1], selectedposition[0], 1)){
                 state = 'wait-p1';
-                actual_player = 0;
+                nextPlayer()
             }
+        }else if(board[selectedposition[1]][selectedposition[0]] == 1){
+            state = 'p2-select-finalpos';
+            alert('Selecione a posição de destino');
+            oldselectedposition = selectedposition;
         }else{
-            alert('Jogada ilegal')
+            alert('Jogada ilegal, não é possivel selecionar um local');
         }
     }
 }
 //start new game 
 function startNewGame(){
+
     //12 pieces of each player
     pieces_players = [12,12];
-    actual_player = 0;
+    setActualPlayer(0);
     state = "wait-p1";
     //create array of board
     board= new Array(6);
     for(let i = 0; i < 6; i++)
         board[i] = [null,null,null,null,null];
+    
+    printAll();
  
 }
 //this place is empty?
@@ -80,8 +119,11 @@ function anotherPlayer(player){
 
 //move piece in board
 function movePiece(x1, y1, x2, y2, player){
+   
     if((atPlace(x1,y1,player)) && emptyPlace(x2,y2) ){
+        
         if((x1+y1 == x2+y2+1) || (x1+y1 == x2+y2-1)){
+           
            board[x1][y1] = null;
            board[x2][y2] = player; 
            return 1;
@@ -113,7 +155,7 @@ function movePiece(x1, y1, x2, y2, player){
 }
 //change to other player
 function nextPlayer(){
-    actual_player = anotherPlayer(actual_player);
+    setActualPlayer(anotherPlayer(actual_player));
 }
 
 function logboard(){

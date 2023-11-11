@@ -61,13 +61,34 @@ canvas.addEventListener("mousedown", (e) => {
     setState('p'+(actual_player+1)+'-selectpos');
 });
 
+function printPiece(player, x, y){
+    ctx.strokeStyle = 'rgb(0,0,0)'
+    if(player == 0)
+        ctx.fillStyle = "rgb(250,210, 40)";
+    else 
+        ctx.fillStyle = "rgb(70,160, 160)";
+
+    ctx.beginPath();
+    ctx.arc(45+100*x, 45+100*y, 30, 0, 2*Math.PI, true);
+    ctx.fill();
+    ctx.stroke();
+}
+
+function printPieces(){
+    for(let i = 0 ; i < 5; i++)
+        for(let j = 0 ; j < 6; j++){
+            if(board[i][j]!=null)
+                printPiece(board[i][j], j, i);
+        }
+}
+
 function printAll(){
     requestAnimationFrame(printAll);
     clearBoard();
     printBoard(); 
     highlightPosition(mousepos);
-    printSelected(selectedposition); 
+    printSelected(selectedposition);
+    printPieces();
     opacity-=0.1;
 }
 
-printAll();

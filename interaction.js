@@ -1,5 +1,6 @@
 var elements = document.getElementsByClassName("ball");
-
+var span_actualplayer = document.getElementById('actual-player');
+var cont_actualplayer = document.getElementById('container-actual-player');
 function selectPiece(e){
     if(e.toElement.className == "ball one"){
         setState('p1-chosepiece');

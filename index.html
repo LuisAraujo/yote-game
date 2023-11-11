@@ -1,9 +1,10 @@
 <document>
 <head>
     <title>Yote - The African Game</title>
+    <meta charset="utf-8">
     <style>
         body{
-            background-image: url("background.jpg");
+            /*background-image: url("background.jpg");*/
             background-size: cover;
         }
         #main-canvas{
@@ -11,20 +12,17 @@
             margin-left: calc(50% - 300px);
             margin-top: 10px;
             margin-bottom: 10px;
+            border-radius: 15px;
         }
-        #footer{
-            position: fixed;
-            bottom: 5px;
-            background-color: aliceblue;
-            padding: 2px;
-            border-radius: 5px;
-        }
+        
         .container{
             background-color: #fff;
             border-radius: 5px;
             padding: 5px;
             height: 35px;
-            
+            width: 440px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .ball{
             border-radius: 50%;
@@ -46,11 +44,25 @@
             background-color: rgb(70,160, 160);
         }
 
+        #container-actual-player{
+            border-radius: 5px;
+            width: 120px;
+            padding: 5px;
+        }
+
+        .container-p1{
+            background-color: rgb(250,210, 40); 
+        }
+
+        .container-p2{
+            background-color: rgb(70,160, 160) 
+        }
+
     </style>
 </head>
 <body>
-<div>
-    <img src="">
+<div id="container-actual-player">
+    <span>Jogador Atual: </span><span id="actual-player"></span>
 </div>
 <div class="container" id="container-ball1">
     <div class="ball one"></div>
@@ -82,8 +94,6 @@
     <div class="ball two"></div>
     <div class="ball two"></div>
 </div>
-
-<div id="footer">Background: Image by Freepik</div>
 
 
 <script src="app.js"></script>
