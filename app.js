@@ -46,7 +46,7 @@ function setState(s){
         if(atPlace( selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
             checkVictory(actual_player);
-            if(checkMultipleCapture()){
+            if(checkMultipleCapture(oldselectedposition[1],oldselectedposition[0], actual_player)){
                 state = 'p1-select-finalpos';
                 showMessage('Você pode continuar jogando!');
                 selectedposition = oldselectedposition;
@@ -62,7 +62,7 @@ function setState(s){
         if(atPlace(selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
             checkVictory(actual_player);
-            if(checkMultipleCapture()){
+            if(checkMultipleCapture(oldselectedposition[1],oldselectedposition[0], actual_player)){
                 state = 'p2-select-finalpos';
                 showMessage('Você pode continuar jogando!');
                 selectedposition = oldselectedposition;
@@ -96,6 +96,9 @@ function setState(s){
                 state = 'wait-p2';
                 removeInteractionPiece(actual_player);
                 nextPlayer()
+            }else{
+                showMessage('Não foi possivel posicionar a peça!');
+                state = 'p1-chosepiece';
             }
         }else if(board[selectedposition[1]][selectedposition[0]] == 0){
             state = 'p1-select-finalpos';
@@ -112,6 +115,9 @@ function setState(s){
                 state = 'wait-p1';
                 removeInteractionPiece(actual_player);
                 nextPlayer()
+            }else{
+                showMessage('Não foi possivel posicionar a peça!');
+                state = 'p1-chosepiece'
             }
         }else if(board[selectedposition[1]][selectedposition[0]] == 1){
             state = 'p2-select-finalpos';
@@ -128,7 +134,7 @@ function setState(s){
 function startNewGame(){
 
     //12 pieces of each player
-    pieces_players = [1,12];
+    pieces_players = [12,12];
     setActualPlayer(0);
     state = "wait-p1";
     //create array of board
@@ -142,6 +148,9 @@ function startNewGame(){
 }
 //this place is empty?
 function emptyPlace(x, y){
+    if(x<0 || x>5 || y < 0 || y > 4)
+        return false;
+    console.log(x, y);
     return board[x][y] == null;
 }
 //this play is at place?
@@ -241,8 +250,18 @@ function logboard(){
 }
 
 //TODO: check if actual player can capture more pieces
-function checkMultipleCapture(){
-    return false;
+function checkMultipleCapture(x,y, player){
+    console.log(x, y, player,emptyPlace(x,y+2), atPlace(x,y-1, anotherPlayer(player)) )
+        
+    if ( (emptyPlace(x+2,y) && atPlace(x+1,y, anotherPlayer(player)))
+        || (emptyPlace(x-2,y) && atPlace(x-1,y, anotherPlayer(player)))
+        ||(emptyPlace(x,y+2) && atPlace(x,y+1, anotherPlayer(player)))
+        ||(emptyPlace(x+2,y-2) && atPlace(x,y-1, anotherPlayer(player)))
+        ){
+            
+            return true;
+        }else
+        return false;
 }
 
 function checkVictory(player){
