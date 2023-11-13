@@ -240,7 +240,7 @@ function logboard(){
         console.log(board[i]);
 }
 
-//check if actual player can capture more pieces
+//TODO: check if actual player can capture more pieces
 function checkMultipleCapture(){
     return false;
 }
@@ -251,7 +251,7 @@ function checkVictory(player){
         if(board[i].findIndex((element) => element == anotherPlayer(player)) != -1)
             sum++;
     }
-    console.log(sum)
+ 
     if((sum == 0) && (pieces_players[anotherPlayer(player)] == 0))
         showWin(player);
 }
