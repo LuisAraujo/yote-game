@@ -37,8 +37,8 @@ function setStartGame(){
     span_actualplayer = document.getElementById('actual-player');
     cont_actualplayer = document.getElementById('header');
     cont_actualmessage = document.getElementById('actual-messages');
-
-    
+    modalwin = document.getElementById('modal-win');
+    nameplayerwin = document.getElementById('winplayer');
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener('click', selectPiece, false);
     }
@@ -46,4 +46,9 @@ function setStartGame(){
     startNewGame();
 }
 
+function showWin(player){
+    modalwin.style.display = 'block';
+    blackground.style.display = 'block';
+    nameplayerwin.innerText = playersname[player];
+}
 

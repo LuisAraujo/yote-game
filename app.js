@@ -12,7 +12,7 @@ var state = '';
 
 //setting states
 function setState(s){
-   
+    
     if(state == 'p1-select-finalpos'){
         var move = movePiece(oldselectedposition[1], oldselectedposition[0],
             selectedposition[1], selectedposition[0], 0);
@@ -45,6 +45,7 @@ function setState(s){
     }else if(state == 'p1-selectremove'){
         if(atPlace( selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
+            checkVictory(actual_player);
             if(checkMultipleCapture()){
                 state = 'p1-select-finalpos';
                 showMessage('Você pode continuar jogando!');
@@ -60,6 +61,7 @@ function setState(s){
     }else if(state == 'p2-selectremove'){
         if(atPlace(selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
+            checkVictory(actual_player);
             if(checkMultipleCapture()){
                 state = 'p2-select-finalpos';
                 showMessage('Você pode continuar jogando!');
@@ -119,12 +121,14 @@ function setState(s){
             showMessage('Jogada ilegal, não é possivel selecionar um local');
         }
     }
+
+    
 }
 //start new game 
 function startNewGame(){
 
     //12 pieces of each player
-    pieces_players = [12,12];
+    pieces_players = [1,12];
     setActualPlayer(0);
     state = "wait-p1";
     //create array of board
@@ -239,4 +243,15 @@ function logboard(){
 //check if actual player can capture more pieces
 function checkMultipleCapture(){
     return false;
+}
+
+function checkVictory(player){
+    let sum = 0;
+    for(let i = 0; i < board.length; i++){
+        if(board[i].findIndex((element) => element == anotherPlayer(player)) != -1)
+            sum++;
+    }
+    console.log(sum)
+    if((sum == 0) && (pieces_players[anotherPlayer(player)] == 0))
+        showWin(player);
 }

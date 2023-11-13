@@ -11,13 +11,19 @@
 <body>
 <div id="start-game">
         <img id="logo" src="source/logo_yote.png">
-        <div id="btn-star">
+        <div title="Jogar em Krol" id="btn-star">
             Djuga
         </div>
         <div id="footer">Desenvolvido por Luis Gustavo Araujo - Projeto AfroGames</div>
 </div>
 
 <div id="game">
+    <div id="modal-win">
+        <span class="title" title="Parabéns em Krol">Parabens</span>
+        <span class="text"> O jogador <span id="winplayer"></span> venceu!</span>
+    </div>
+    <div id="blackground"></div>
+
     <div id="header">     
             <span><b>Jogador Atual:</b> </span><span id="actual-player"></span>
             <span><b>Mensagem:</b></span> <span id="actual-messages"></span>

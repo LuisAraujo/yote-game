@@ -23,11 +23,13 @@ body{
     overflow: hidden;
 }
 #main-canvas{
-    border: 5px solid #000;
+    /*border: 5px solid #000;
+    border-radius: 15px;
+    */
     margin-left: calc(50% - 300px);
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 15px;
+    
 }
 
 .container{
@@ -126,7 +128,40 @@ body{
 #btn-star:hover{
     background-color: rgb(47, 107, 107);
     color:#fff;
-    cursor: pointer;
-    
-    
+    cursor: pointer;   
+}
+
+#blackground{
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+}
+
+#modal-win{
+    background-color: #fff;
+    width: 350px;
+    height: 150px;
+    position: fixed;
+    z-index: 99;
+    top: 100px;
+    left: calc(50% - 175px);
+    font-family: 'Open Sans', sans-serif;
+    display: none;
+}
+
+#modal-win .title{
+    font-weight: 700;
+    text-align: center;
+    font-size: 30px;
+    display: block;
+}
+
+#modal-win .text{
+    font-weight: 300;
+    text-align: center;
+    font-size: 30px;
+    display: block;
 }
