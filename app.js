@@ -1,15 +1,16 @@
+/*
+escolher uma peça a ser removida
+remover um peça no html quando utilizada
+*/
+
 var board;
 var pieces_players;
 var actual_player;
 //wait-p1, p1-chosepiece, selectpos
 var state = '';
 
-function setActualPlayer(player){
-    actual_player = player;
-    span_actualplayer.innerText = actual_player;
-    cont_actualplayer.className = 'container-p'+(player+1);
-}
 
+//setting states
 function setState(s){
    
     if(state == 'p1-select-finalpos'){
@@ -18,6 +19,7 @@ function setState(s){
            if( movePiece(oldselectedposition[1], oldselectedposition[0],
                 selectedposition[1], selectedposition[0], 0) ){
                     state = 'wait-p2';
+                    removeInteractionPiece(actual_player);
                     nextPlayer()
                 }else{
                     console.log('jogada ilegal, não é possivel mover para essa posição');
@@ -28,7 +30,8 @@ function setState(s){
             if(movePiece(oldselectedposition[1], oldselectedposition[0],
                 selectedposition[1], selectedposition[0], 1)){
                     state = 'wait-p1';
-                    nextPlayer()
+                    nextPlayer();
+                    removeInteractionPiece(actual_player);
                 }else{
                     console.log('jogada ilegal, não é possivel mover para essa posição');
                 }
@@ -37,30 +40,31 @@ function setState(s){
     }else if(s == 'p1-chosepiece'){
         if(state == 'wait-p1'){
             state = s;
-            alert("Selecione a posicao");
+            showMessage("Selecione uma peça e uma posição!");
         }else{
-            alert('Jogada ilegal, não é sua vez!')
+            showMessage('Jogada ilegal, não é sua vez!');
         } 
     }else if(s == 'p2-chosepiece'){
         if(state == 'wait-p2'){
             state = s;
-            alert("Selecione a posicao");
+            showMessage("Selecione uma peça e uma posição!");
         }else{
-            alert('Jogada ilegal, não é sua vez!')
+            showMessage('Jogada ilegal, não é sua vez!')
         } 
     }else if(s == 'p1-selectpos'){
         if(state == 'p1-chosepiece'){
             state = s;
             if(newPiece(selectedposition[1], selectedposition[0], 0)){
                 state = 'wait-p2';
+                removeInteractionPiece(actual_player);
                 nextPlayer()
             }
         }else if(board[selectedposition[1]][selectedposition[0]] == 0){
             state = 'p1-select-finalpos';
-            alert('Selecione a posição de destino');
+            showMessage('Selecione a posição de destino!');
             oldselectedposition = selectedposition;
         }else{
-            alert('Jogada ilegal, não é possivel selecionar um local')
+            showMessage('Jogada ilegal, não é possivel selecionar um local')
         }
     
     }else if(s == 'p2-selectpos'){
@@ -68,14 +72,15 @@ function setState(s){
             state = s;
             if(newPiece(selectedposition[1], selectedposition[0], 1)){
                 state = 'wait-p1';
+                removeInteractionPiece(actual_player);
                 nextPlayer()
             }
         }else if(board[selectedposition[1]][selectedposition[0]] == 1){
             state = 'p2-select-finalpos';
-            alert('Selecione a posição de destino');
+            showMessage('Selecione a posição de destino!');
             oldselectedposition = selectedposition;
         }else{
-            alert('Jogada ilegal, não é possivel selecionar um local');
+            showMessage('Jogada ilegal, não é possivel selecionar um local');
         }
     }
 }
@@ -92,6 +97,7 @@ function startNewGame(){
         board[i] = [null,null,null,null,null];
     
     printAll();
+    showMessage('Jogador Amarelo inicia o jogo! Escolha uma peça e uma posição.')
  
 }
 //this place is empty?
