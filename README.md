@@ -2,10 +2,10 @@
 
 Implementação em HTML5 do jogo Yoté. 
 
+![Logo 2d do jogo Yote](https://luisaraujo.github.io/yote-game/source/logo_yote.png)
+
+
 Yoté é um jogo de tabuleiro de origem africana (popular no Senegal, Mali, Guiné e Gâmbia). O jogo tem semelhanças com o jogo de damas, mas possuem regras específicas.
-
-![imagem 2d do jogo Yote](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Yoté.svg/400px-Yoté.svg.png)
-
 
 Regras
 
@@ -18,5 +18,17 @@ Regras
   * Capturar uma peça do oponente, pulando sobre ela. Isso é possível caso a peça do oponente esteja ortogonalmente adjacente a uma peça do jogador, e a casa atrás da peça do oponente esteja vazia. Ao capturar uma peça do oponente, o jogador pode escolher uma outra peça do oponente do tabuleiro e removê-la.
 * A captura múltipla é possível quando a mesma peça puder capturar uma peça do oponente e logo em seguida capturar uma próxima peça do adversário, quantas vezes isso for possível. Antes de realizar a segunda captura é preciso remover uma das peças do adversário. É permitido remover uma peça do adversário que dê ao jogador a possibilidade de realizar a captura múltipla.
 * Saltar sobre uma de suas próprias peças, sem capturá-la. No entanto, isso não permite que uma peça adversária seja capturada logo em seguida.
+
+Tela:
+
+Tela Inicial
+![Tela inicial](https://luisaraujo.github.io/yote-game/source/screen/initial-screen.png)
+
+
+Interface do Jogo
+![imagem do jogo](https://luisaraujo.github.io/yote-game/source/screen/game-screen.png)
+
+
+
 
 Fonte: https://pt.wikipedia.org/wiki/Yoté
