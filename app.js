@@ -14,29 +14,26 @@ var state = '';
 function setState(s){
    
     if(state == 'p1-select-finalpos'){
-        if(emptyPlace(selectedposition[1], selectedposition[0])){
-           
-           if( movePiece(oldselectedposition[1], oldselectedposition[0],
-                selectedposition[1], selectedposition[0], 0) ){
-                    state = 'wait-p2';
-                    removeInteractionPiece(actual_player);
-                    nextPlayer()
-                }else{
-                    console.log('jogada ilegal, não é possivel mover para essa posição');
-                }
+             
+        if( movePiece(oldselectedposition[1], oldselectedposition[0],
+        selectedposition[1], selectedposition[0], 0) == 1){
+            state = 'wait-p2';
+            nextPlayer();
+        }else{
+            showMessage('jogada ilegal, não é possivel mover para essa posição');
         }
+        
     }else if(state == 'p2-select-finalpos'){
-        if(emptyPlace(selectedposition[1], selectedposition[0])){
-            if(movePiece(oldselectedposition[1], oldselectedposition[0],
-                selectedposition[1], selectedposition[0], 1)){
-                    state = 'wait-p1';
-                    nextPlayer();
-                    removeInteractionPiece(actual_player);
-                }else{
-                    console.log('jogada ilegal, não é possivel mover para essa posição');
-                }
-                
+       
+        if(movePiece(oldselectedposition[1], oldselectedposition[0],
+        selectedposition[1], selectedposition[0], 1) == 1){
+            state = 'wait-p1';
+            nextPlayer();
+           
+        }else{
+            showMessage('jogada ilegal, não é possivel mover para essa posição');
         }
+
     }else if(s == 'p1-chosepiece'){
         if(state == 'wait-p1'){
             state = s;
@@ -125,36 +122,59 @@ function anotherPlayer(player){
 
 //move piece in board
 function movePiece(x1, y1, x2, y2, player){
-   
+    remove = [];
+    //select your piece and move to empty place?
     if((atPlace(x1,y1,player)) && emptyPlace(x2,y2) ){
-        
-        if((x1+y1 == x2+y2+1) || (x1+y1 == x2+y2-1)){
+        if((x1+y1 > x2+y2+1) || (x1+y1 < x2+y2-1)){
+            return -1;
+        //move by one square
+        }else if((x1+y1 == x2+y2+1) || (x1+y1 == x2+y2-1)){
            
            board[x1][y1] = null;
            board[x2][y2] = player; 
            return 1;
+        //move by two square (capture)
         }else if((x1+y1 == x2+y2+2) || (x1+y1 == x2+y2-2)){
+            //to left
             if(x1>x2){
+                //has opponent piece?
                 if( !atPlace(x1-1, y1, anotherPlayer(player))){
                     return -1;    
+                }else{
+                    remove = [x1-1, y1]
                 }
+            //to right
             }else if(x1<x2){
+                //has opponent piece?
                 if( !atPlace(x1+1, y1, anotherPlayer(player))){
                     return -2; 
+                }else{
+                    remove=[x1+1, y1]
                 }
+            //to down
             }else if(y1>y2){
+                //has opponent piece?
                 if( !atPlace(x1, y1-1, anotherPlayer(player))){
                     return -3; 
+                }else{
+                    remove=[x1, y1-1]
                 }
+            //to up
             }else if(y1<y2){
+                //has opponent piece?
                 if( !atPlace(x1, y1+1, anotherPlayer(player))){
                      return -4;  
-                }   
+                } else{
+                    remove=[x1, y1+1]
+                } 
             }
+            //update board
             board[x1][y1] = null;
             board[x2][y2] = player;
+            console.log(remove[0], remove[i], board[remove[0]][remove[1]] )
+            board[remove[0]][remove[1]] = null;
         }
-        return 2;
+        return 1;
     }else{
         return -5;
     }
