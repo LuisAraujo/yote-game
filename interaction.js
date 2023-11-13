@@ -1,7 +1,7 @@
-var elements = document.getElementsByClassName("ball");
-var span_actualplayer = document.getElementById('actual-player');
-var cont_actualplayer = document.getElementById('header');
-var cont_actualmessage = document.getElementById('actual-messages');
+
+var playersname = ['Amarelo', 'Azul']
+var btnstart = document.getElementById('btn-star');
+btnstart.addEventListener('click', setStartGame, false);
 
 function selectPiece(e){
     if(e.toElement.className == "ball one"){
@@ -11,15 +11,9 @@ function selectPiece(e){
     }
 }
 
-for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('click', selectPiece, false);
-}
-
 function showMessage(message){
     cont_actualmessage.innerText = message;
 }
-
-var playersname = ['Amarelo', 'Azul']
 
 function setActualPlayer(player){
     actual_player = player;
@@ -34,5 +28,21 @@ function removeInteractionPiece(player){
         elem[0].remove();
 }
 
-startNewGame();
+function setStartGame(){
+    
+    document.getElementById('start-game').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    elements = document.getElementsByClassName("ball");
+    span_actualplayer = document.getElementById('actual-player');
+    cont_actualplayer = document.getElementById('header');
+    cont_actualmessage = document.getElementById('actual-messages');
+
+    
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', selectPiece, false);
+    }
+    
+    startNewGame();
+}
+
 
