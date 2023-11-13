@@ -4,7 +4,8 @@ var btnstart = document.getElementById('btn-star');
 btnstart.addEventListener('click', setStartGame, false);
 
 function selectPiece(e){
-    if(e.toElement.className == "ball one"){
+    
+    if(e.target.className == "ball one"){
         setState('p1-chosepiece');
     }else{
         setState('p2-chosepiece');

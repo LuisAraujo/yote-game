@@ -2,15 +2,34 @@
 <head>
     <title>Yote - The African Game</title>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="source/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
     <style>
+        @-webkit-keyframes fadeInFromNone {
+            0% {
+            display: none;
+            opacity: 0;
+            }
+
+            50% {
+            display: block;
+            opacity: 0.5;
+            }
+
+            100% {
+            display: block;
+            opacity: 1;
+            }
+        }
+
         body{
             /*background-image: url("background.jpg");*/
             background-size: cover;
             padding: 0px;
             margin: 0px;
+            overflow: hidden;
         }
         #main-canvas{
             border: 5px solid #000;
@@ -89,6 +108,10 @@
             width: 20%;
             margin-left: 40%;
             margin-top: 20px;
+            -webkit-animation: fadeInFromNone 0.5s ease-out;
+            -moz-animation: fadeInFromNone 0.5s ease-out;
+            -o-animation: fadeInFromNone 0.5s ease-out;
+            animation: fadeInFromNone 0.5s ease-out;
             
         }
         #btn-star{
