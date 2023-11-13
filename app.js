@@ -20,6 +20,7 @@ function setState(s){
             state = 'wait-p2';
             nextPlayer();
         }else if(move == 2){
+            oldselectedposition = selectedposition;
             state = 'p1-selectremove';
             showMessage('Selecione uma das peças do seu oponente para ser removida!');
   
@@ -34,6 +35,7 @@ function setState(s){
             state = 'wait-p1';
             nextPlayer();
         }else if(move == 2){
+            oldselectedposition = selectedposition;
             state = 'p2-selectremove';
             showMessage('Selecione uma das peças do seu oponente para ser removida!');
         }else{
@@ -43,17 +45,30 @@ function setState(s){
     }else if(state == 'p1-selectremove'){
         if(atPlace( selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
-            nextPlayer();
-            state = 'wait-p2';
+            if(checkMultipleCapture()){
+                state = 'p1-select-finalpos';
+                showMessage('Você pode continuar jogando!');
+                selectedposition = oldselectedposition;
+            }else{
+                nextPlayer();
+                state = 'wait-p2';
+            }
         }else{
             showMessage("Este local não tem peça do oponente!");
         }
 
     }else if(state == 'p2-selectremove'){
-        if(atPlace( selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
+        if(atPlace(selectedposition[1], selectedposition[0], anotherPlayer(actual_player))){
             removePiece(selectedposition[1], selectedposition[0]);
-            nextPlayer();
-            state = 'wait-p1';
+            if(checkMultipleCapture()){
+                state = 'p2-select-finalpos';
+                showMessage('Você pode continuar jogando!');
+                selectedposition = oldselectedposition;
+            }else{
+                nextPlayer();
+                state = 'wait-p1';
+            }
+          
         }else{
             showMessage("Este local não tem peça do oponente!");
         }
@@ -152,9 +167,10 @@ function anotherPlayer(player){
 //move piece in board
 function movePiece(x1, y1, x2, y2, player){
     remove = [];
+    ret = 0;
     //select your piece and move to empty place?
     if((atPlace(x1,y1,player)) && emptyPlace(x2,y2) ){
-        
+        //long jump
         if((x1+y1 > x2+y2+2) || (x1+y1 < x2+y2-2)){
             return -1;
         //move by one square
@@ -169,52 +185,45 @@ function movePiece(x1, y1, x2, y2, player){
             //to left
             if(x1>x2){
                 //has opponent piece?
-                if( !atPlace(x1-1, y1, anotherPlayer(player))){
-                    return -1;    
+                if( atPlace(x1-1, y1, anotherPlayer(player))){
+                    ret = 2;
                 }else{
-                    return 2;
-                    //remove = [x1-1, y1];
+                    ret = 1;
                 }
             //to right
             }else if(x1<x2){
                 //has opponent piece?
-                if( !atPlace(x1+1, y1, anotherPlayer(player))){
-                    return -2; 
+                if( atPlace(x1+1, y1, anotherPlayer(player))){
+                    ret = 2;
                 }else{
-                    return 2;
-                    //remove=[x1+1, y1];
+                    ret = 1;
                 }
             //to down
             }else if(y1>y2){
                 //has opponent piece?
-                if( !atPlace(x1, y1-1, anotherPlayer(player))){
-                    return -3; 
+                if( atPlace(x1, y1-1, anotherPlayer(player))){
+                    ret = 2;
                 }else{
-                    return 2;
-                    //remove=[x1, y1-1];
+                    ret = 1;
                 }
             //to up
             }else if(y1<y2){
                 //has opponent piece?
-                if( !atPlace(x1, y1+1, anotherPlayer(player))){
-                     return -4;  
+                if( atPlace(x1, y1+1, anotherPlayer(player))){ 
+                    ret = 2;
                 } else{
-                    return 2;
-                    //remove=[x1, y1+1];
-                } 
+                    ret = 1;
+                }
             }
-            //update board
+
             board[x1][y1] = null;
             board[x2][y2] = player;
-            //board[remove[0]][remove[1]] = null;
-            return 1;
+            return ret;
         
-        }else{
-            return -6;
         }
-        
+    //invalid place
     }else{
-        return -5;
+        return -1;
     }
 }
 //change to other player
@@ -225,4 +234,9 @@ function nextPlayer(){
 function logboard(){
     for(let i = 0; i < 5; i++)
         console.log(board[i]);
+}
+
+//check if actual player can capture more pieces
+function checkMultipleCapture(){
+    return false;
 }
